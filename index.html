@@ -14,7 +14,7 @@
 
       function openApp() {
         const { screen, id } = getQueryParams();
-        const appUrl = id ? `goldenlive://${screen}/${id}` : `goldenlive://${screen}`;
+        const appUrl = id ? `goldenlive://${screen}/${id}` : screen ?  `goldenlive://${screen}` : `goldenlive://`;
 
         // Attempt to open the app
         const iframe = document.createElement('iframe');
