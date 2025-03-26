@@ -14,30 +14,27 @@
 
       function openApp() {
         const { screen, id } = getQueryParams();
-        const appUrl = id ? `goldenlive://${screen}/${id}` : screen ?  `goldenlive://${screen}` : `goldenlive://`;
+        const appUrl = id ? `goldenlive://${screen}/${id}` : `goldenlive://${screen}`;
 
-        // Attempt to open the app
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = appUrl;
-        document.body.appendChild(iframe);
-
-        // Check if the app opens within a timeout
+        // Try opening the app
         const start = Date.now();
+        window.location.href = appUrl;
+
+        // Set timeout to check if the app opened
         setTimeout(() => {
           if (Date.now() - start < 1500) {
             alert('App not available.');
           }
-          document.body.removeChild(iframe);
         }, 1000);
       }
+
+      window.onload = openApp; // Auto open on page load
     </script>
   </head>
-  <body onload="openApp()">
+  <body>
     <h1>Opening GoldenLive App...</h1>
     <p>
-      If the app does not open,
-      <a id="appLink" href="goldenlive://home">click here</a>.
+      If the app does not open, <a id="appLink" href="#">click here_</a>.
     </p>
     <script>
       const { screen, id } = getQueryParams();
