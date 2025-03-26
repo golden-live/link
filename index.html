@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open GoldenLive App</title>
+    <script>
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        const screen = params.get('screen') || 'trendDetaild'; // Default screen if not provided
+        const id = params.get('id') || ''; // ID is optional
+        return { screen, id };
+      }
+
+      function openApp() {
+        const { screen, id } = getQueryParams();
+        const appUrl = id ? `goldenlive://${screen}/${id}` : `goldenlive://${screen}`;
+
+        // Attempt to open the app
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = appUrl;
+        document.body.appendChild(iframe);
+
+        // Check if the app opens within a timeout
+        const start = Date.now();
+        setTimeout(() => {
+          if (Date.now() - start < 1500) {
+            alert('App not available.');
+          }
+          document.body.removeChild(iframe);
+        }, 1000);
+      }
+    </script>
+  </head>
+  <body onload="openApp()">
+    <h1>Opening GoldenLive App...</h1>
+    <p>
+      If the app does not open,
+      <a id="appLink" href="goldenlive://home">click here</a>.
+    </p>
+    <script>
+      const { screen, id } = getQueryParams();
+      document.getElementById('appLink').href = id
+        ? `goldenlive://${screen}/${id}`
+        : `goldenlive://${screen}`;
+    </script>
+  </body>
+</html>
