@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Open GoldenLive App</title>
-    <script>
+<!--     <script>
       function getQueryParams() {
         const params = new URLSearchParams(window.location.search);
         const screen = params.get('screen') || 'trendDetaild'; // Default screen if not provided
@@ -29,7 +29,32 @@
       }
 
       window.onload = openApp; // Auto open on page load
-    </script>
+    </script> -->
+    <script>
+  function openApp() {
+    const baseWebUrl = "https://golden-live.github.io/link/";
+    const baseAppUrl = "goldenlive://";
+
+    // Extract the path after the base URL
+    const path = window.location.href.replace(baseWebUrl, "");
+
+    // Construct the app URL
+    const appUrl = `${baseAppUrl}${path}`;
+
+    // Try opening the app
+    const start = Date.now();
+    window.location.href = appUrl;
+
+    // Set timeout to check if the app opened
+    setTimeout(() => {
+      if (Date.now() - start < 1500) {
+        alert("App not available.");
+      }
+    }, 1000);
+  }
+
+  window.onload = openApp; // Auto open on page load
+</script>
   </head>
   <body>
     <h1>Opening GoldenLive App...</h1>
